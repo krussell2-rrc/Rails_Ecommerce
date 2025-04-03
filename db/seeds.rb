@@ -10,10 +10,11 @@ require 'httparty'
 #   end
 # AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
-categories = [ "laptops", "mobile-accessories", "smartphones", "tablets" ]
 
-categories.each do |category|
-  encoded_term = URI.encode_www_form_component(category)
+[ "laptops", "mobile-accessories", "smartphones", "tablets" ].each do |category_name|
+  category = Category.find_or_create_by!(category_name: category_name)
+
+  encoded_term = URI.encode_www_form_component(category_name)
   url = "https://dummyjson.com/products/category/#{encoded_term}"
 
   response = HTTParty.get(url)
@@ -22,10 +23,19 @@ categories.each do |category|
 
   if data["products"]
     data["products"].each do |product|
+      category_id = category.id
       product_name = product["title"]
       product_price = product["price"]
       product_description = product["description"]
-      product_img = product["images"]["0"]
+      product_img = product["images"][0]
+
+      Product.create!(
+        product_name: product_name,
+        product_price: product_price,
+        product_description: product_description,
+        product_img: product_img,
+        category_id: category_id
+      )
     end
   end
 end
