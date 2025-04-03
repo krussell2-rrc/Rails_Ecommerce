@@ -26,6 +26,8 @@ gem "cancancan"
 gem "draper"
 gem "pundit"
 
+# API KEY
+gem "dotenv-rails"
 
 # API Fetching
 gem "httparty"

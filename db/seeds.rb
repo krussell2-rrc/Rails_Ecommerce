@@ -1,3 +1,4 @@
+require 'httparty'
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
@@ -7,4 +8,24 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+categories = [ "laptops", "mobile-accessories", "smartphones", "tablets" ]
+
+categories.each do |category|
+  encoded_term = URI.encode_www_form_component(category)
+  url = "https://dummyjson.com/products/category/#{encoded_term}"
+
+  response = HTTParty.get(url)
+
+  data = JSON.parse(response.body)
+
+  if data["products"]
+    data["products"].each do |product|
+      product_name = product["title"]
+      product_price = product["price"]
+      product_description = product["description"]
+      product_img = product["images"]["0"]
+    end
+  end
+end
