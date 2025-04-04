@@ -20,6 +20,8 @@ gem "jbuilder"
 # Active Admin Gem
 gem "activeadmin"
 
+gem "faker"
+
 # Plus integrations with:
 gem "devise"
 gem "cancancan"
