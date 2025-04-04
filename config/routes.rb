@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get "pages/about"
-  get "pages/contact"
+  get "about", to: "pages/about"
+  get "contact", to: "pages/contact"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
