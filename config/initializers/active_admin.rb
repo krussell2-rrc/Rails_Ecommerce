@@ -6,6 +6,15 @@ ActiveAdmin.setup do |config|
   #
   config.site_title = "Ecommerce"
 
+  ActiveAdmin.setup do |config|
+    # Clear default JS to add custom ones
+    config.clear_javascripts!
+
+    # Register scripts to support DELETE actions
+    config.register_javascript "https://code.jquery.com/jquery-3.6.0.min.js"
+    config.register_javascript "https://cdn.jsdelivr.net/npm/jquery-ujs@1.2.2/src/rails.js"
+  end
+
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
@@ -174,7 +183,7 @@ ActiveAdmin.setup do |config|
   # You can exclude possibly sensitive model attributes from being displayed,
   # added to forms, or exported by default by ActiveAdmin
   #
-  config.filter_attributes = [:encrypted_password, :password, :password_confirmation]
+  config.filter_attributes = [ :encrypted_password, :password, :password_confirmation ]
 
   # == Localize Date/Time Format
   #
