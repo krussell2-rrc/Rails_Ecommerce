@@ -1,0 +1,22 @@
+<nav class="navbar is-link mb-5" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item has-text-weight-bold is-family-code">Intro To Rails Project</a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    <%= link_to "Home", "/index", class: "navbar-item has-text-weight-bold is-family-code" %>
+
+    <%= link_to "Products", "/products", class: "navbar-item has-text-weight-bold is-family-code" %>
+
+    <%= link_to "About", "/about", class: "navbar-item has-text-weight-bold is-family-code" %>
+  </div>
+  </div>
+</nav>
