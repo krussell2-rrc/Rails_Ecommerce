@@ -9,8 +9,8 @@
         <div class="dropdown-trigger">
           <div class="control">
             <button type="button" class="input has-text-centered" aria-haspopup="true" aria-controls="dropdown-menu">
-              <% if params.dig(:q, :category_name_eq).present? %>
-                <span class="is-capitalized"><%= params[:q][:category_name_eq] %></span>
+              <% if params.dig(:q, :category_category_name_eq).present? %>
+                <span class="is-capitalized"><%= params[:q][:category_category_name_eq] %></span>
               <% else %>
                 <span>Filter By</span>
               <% end %>
@@ -21,15 +21,21 @@
           </div>
         </div>
         <div class="dropdown-menu" id="dropdown-menu" role="menu">
-          <div class="select is-rounded mr-3">
-            <%= f.select :category_name_eq,
-                  options_for_select(Category.pluck(:category_name).uniq, params.dig(:q, :category_name_eq)),
-                  { include_blank: "Select a Category" } %>
+          <div class="select mr-3">
+            <%=  f.select :category_category_name_eq,
+                options_for_select(Category.pluck(:category_name).uniq, params.dig(:q, :category_category_name_eq)),
+                { include_blank: "Select a Category" },
+                class: "select is-rounded" %>
+          </div>
+          <div class="select mr-3">
+            <%= select_tag :sort,
+                  options_for_select(["Newest Products", "Recently Updated"], params[:sort]),
+                  include_blank: "Sort by Relevance" %>
           </div>
         </div>
       </div>
       <div class="control">
-        <%= f.search_field :product_name_cont, class: "input", placeholder: "Search by Product Name" %>
+        <%= f.text_field :product_name_or_product_description_cont, class: "input", placeholder: "Product Search" %>
       </div>
       <div class="control">
         <%= f.submit "Search", class: "button is-info" %>
@@ -37,7 +43,11 @@
     </div>
   </div>
 <%end%>
-<body class="has-background-light">
+<body style="height: 100vh;" class="has-background-light">
+  <% if params[:q].present? %>
+    <%= link_to "< All Products", products_path, class: "ml-5 mb-5 has-text-info has-text-weight-bold is-size-5", style: "text-decoration: none;"%>
+  <% end %>
+  <% if @products.any?%>
   <section class="section">
     <div class="columns is-multiline is-variable is-justify-content-center">
         <%@products.each do |product|%>
@@ -48,16 +58,15 @@
             alt="<%=product.product_name%>">
             <p class="is-size-5 has-text-weight-bold is-family-code"><%=link_to product.product_name, product,
             class: "has-text-black no-underline"%></p>
-
             <p style="font-size: 15px; "class="has-text-weight-bold has-text-black is-family-sans-serif">$<%=product.product_price%></p>
           </div>
         </div>
         <%end%>
     </div>
   </section>
-
-  <!-- Pagination -->
-<div class="pagination is-flex is-justify-content-center mt-5 mb-5">
-  <%= paginate @products %>
-</div>
+  <%else%>
+  <section class="section">
+    <p style="color: red;" class="title is-2 has-text-centered is-family-sans-serif mt-5">No products found matching your search.</p>
+  </section>
+  <%end%>
 </body>
