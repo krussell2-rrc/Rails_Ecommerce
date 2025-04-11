@@ -20,7 +20,11 @@ gem "jbuilder"
 # Active Admin Gem
 gem "activeadmin"
 
+# Faker Gem
 gem "faker"
+
+# Ransack gem
+gem "ransack", "~> 4.3"
 
 # Plus integrations with:
 gem "devise"

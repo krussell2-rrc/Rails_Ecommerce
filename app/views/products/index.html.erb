@@ -1,18 +1,63 @@
 <% content_for :title, "Products" %>
-<h1 class="title is-1 has-text-centered has-text-dark">Our Products</h1>
-<body>
+<h1 class="title is-2 has-text-centered has-text-black is-family-code">Our Products</h1>
+
+<!-- Search Form -->
+<%= search_form_for @q, url: products_path, method: :get do |f| %>
+<div class="is-flex is-justify-content-right">
+    <div class="field has-addons mb-5 mr-5">
+      <div class="dropdown" id="myDropdown">
+        <div class="dropdown-trigger">
+          <div class="control">
+            <button type="button" class="input has-text-centered" aria-haspopup="true" aria-controls="dropdown-menu">
+              <% if params.dig(:q, :category_name_eq).present? %>
+                <span class="is-capitalized"><%= params[:q][:category_name_eq] %></span>
+              <% else %>
+                <span>Filter By</span>
+              <% end %>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div class="select is-rounded mr-3">
+            <%= f.select :category_name_eq,
+                  options_for_select(Category.pluck(:category_name).uniq, params.dig(:q, :category_name_eq)),
+                  { include_blank: "Select a Category" } %>
+          </div>
+        </div>
+      </div>
+      <div class="control">
+        <%= f.search_field :product_name_cont, class: "input", placeholder: "Search by Product Name" %>
+      </div>
+      <div class="control">
+        <%= f.submit "Search", class: "button is-info" %>
+      </div>
+    </div>
+  </div>
+<%end%>
+<body class="has-background-light">
   <section class="section">
     <div class="columns is-multiline is-variable is-justify-content-center">
         <%@products.each do |product|%>
         <div class="column is-12-mobile is-6-tablet is-3-desktop">
-          <div class="box has-text-centered">
+          <div style ="border: 1px solid #000; border-radius: 10px;"class="box has-text-centered has-background-light">
             <img style="width: 180px; height: 280px; object-fit: cover;"
             src="<%=product.product_img%>"
             alt="<%=product.product_name%>">
-            <p class="mt-2 has-text-weight-medium"><%=link_to product.product_name, product%></p>
+            <p class="is-size-5 has-text-weight-bold is-family-code"><%=link_to product.product_name, product,
+            class: "has-text-black no-underline"%></p>
+
+            <p style="font-size: 15px; "class="has-text-weight-bold has-text-black is-family-sans-serif">$<%=product.product_price%></p>
           </div>
         </div>
         <%end%>
     </div>
   </section>
+
+  <!-- Pagination -->
+<div class="pagination is-flex is-justify-content-center mt-5 mb-5">
+  <%= paginate @products %>
+</div>
 </body>
