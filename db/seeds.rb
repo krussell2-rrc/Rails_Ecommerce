@@ -15,7 +15,7 @@ require 'faker'
 access_key = ENV["UNSPLASH_API_KEY"]
 
 [ "laptops", "mobile-accessories", "smartphones", "tablets" ].each do |category_name|
-  category = Category.find_or_create_by!(category_name: category_name)
+  category = Category.create(category_name: category_name)
 
   encoded_term = URI.encode_www_form_component(category_name)
   products_url = "https://dummyjson.com/products/category/#{encoded_term}"
@@ -26,7 +26,7 @@ access_key = ENV["UNSPLASH_API_KEY"]
 
   if data["products"]
     data["products"].each do |product|
-      Product.find_or_create_by!(
+      Product.create(
         product_name: product["title"],
         product_price: product["price"],
         product_description: product["description"],
@@ -51,7 +51,7 @@ access_key = ENV["UNSPLASH_API_KEY"]
     50.times do
       image_data = results.sample
       unsplash_image = image_data["urls"]["regular"]
-      Product.find_or_create_by!(
+      Product.create(
         product_name: "#{Faker::Device.manufacturer} #{Faker::Device.model_name}",
         product_description: Faker::Lorem.paragraph(sentence_count: 3),
         product_price: Faker::Commerce.price(range: 300.0..2000.0),

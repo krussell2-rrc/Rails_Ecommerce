@@ -1,5 +1,5 @@
 <% content_for :title, "Products" %>
-<h1 class="title is-2 has-text-centered has-text-black is-family-code">Our Products</h1>
+<h1 class="title is-2 has-text-centered has-text-black">Our Products</h1>
 
 <!-- Search Form -->
 <%= search_form_for @q, url: products_path, method: :get do |f| %>
@@ -48,7 +48,14 @@
     <%= link_to "< All Products", products_path, class: "ml-5 mb-5 has-text-info has-text-weight-bold is-size-5", style: "text-decoration: none;"%>
   <% end %>
   <% if @products.any?%>
-  <section class="section">
+  <section class="section has-background-light">
+    <p class="title is-2 is-family-code has-text-dark">Browse By:</p>
+    <div class="mb-5">
+      <%@categories.each do |category|%>
+        <li style="list-style-type: none;" class="is-size-5 has-text-info is-capitalized mr-5">
+        <%=link_to category, products_path(q: {category_category_name_eq: "#{category}"})%></li>
+      <%end%>
+    </div>
     <div class="columns is-multiline is-variable is-justify-content-center">
         <%@products.each do |product|%>
         <div class="column is-12-mobile is-6-tablet is-3-desktop">
@@ -69,4 +76,12 @@
     <p style="color: red;" class="title is-2 has-text-centered is-family-sans-serif mt-5">No products found matching your search.</p>
   </section>
   <%end%>
+
+  <!-- Pagination -->
+  <%if @products.total_count > 15%>
+    <div class="pagination is-flex is-justify-content-center mt-5 mb-5">
+      <%= paginate @products %>
+    </div>
+  <%end%>
 </body>
+
