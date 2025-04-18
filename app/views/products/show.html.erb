@@ -1,6 +1,13 @@
 <%content_for(:html_title){@product.product_name}%>
 <h1 class="title is-2 ml-5 has-text-dark"><%=@product.product_name%></h1>
-<body style="height: 100vh;" class="has-background-light">
+
+  <% if flash[:alert] %>
+  <div class="notification is-success flash-alert mb-5">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<body class="has-background-light is-flex is-flex-direction-column min-vh-100">
   <div class="columns">
     <div class="column is-flex">
       <img style="width: 300px; height: 400px; object-fit: cover;" class="ml-5" src="<%=@product.product_img%>" alt="
@@ -13,7 +20,7 @@
     Price: $<%=@product.product_price%></li>
   <%= form_with url: add_to_cart_path, method: :post, local: true do %>
   <%=  hidden_field_tag :product_id, @product.id %>
-  <%=  submit_tag "Add To Cart", class: "button is-primary ml-5" %>
+  <%=  submit_tag "Add To Cart", class: "button is-primary ml-5 mb-5" %>
   <%end%>
 </body>
 
