@@ -11,6 +11,9 @@
   </div>
   <li style="width: 80%; list-style-type: none;" class="block is-family-code has-text-dark ml-5 is-size-5">
     Price: $<%=@product.product_price%></li>
-  <button id="addToCartButton" class="button is-primary ml-5">Add To Cart</button>
+  <%= form_with url: add_to_cart_path, method: :post, local: true do %>
+  <%=  hidden_field_tag :product_id, @product.id %>
+  <%=  submit_tag "Add To Cart", class: "button is-primary ml-5" %>
+  <%end%>
 </body>
 
