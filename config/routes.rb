@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+  get "cart_items/create"
   get "cart/show"
   resources :products, only: [ :index, :show ]
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   get "about", to: "pages#about"
   get "contact", to: "pages#contact"
+  get "/cart", to: "cart#show", as: "cart"
+  post "/cart_items", to: "cart_items#create", as: "add_to_cart"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
