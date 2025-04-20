@@ -13,4 +13,11 @@ class CartItemsController < ApplicationController
     end
     redirect_to product_path(product), alert: "Item added to cart!"
   end
+
+  def update
+    item = CartItem.find(params[:id])
+
+    item.update(quantity: params[:cart_item][:quantity])
+    item.save
+  end
 end

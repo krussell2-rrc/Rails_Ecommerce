@@ -1,1 +1,69 @@
-<h1 class="title is-3">Your Shopping Cart</h1>
+<h1 class="title is-3 ml-5">Your Shopping Cart</h1>
+<% if current_cart.cart_items.any? %>
+<div class="columns">
+  <div class="column">
+<table class="table is-fullwidth is-striped ml-5">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+    <tbody>
+      <% current_cart.cart_items.each do |item| %>
+        <tr>
+          <td>
+            <img src="<%= item.product.product_img %>" style="width: 75px; height: 75px; object-fit: cover;">
+          </td>
+          <td><%= item.product.product_name %></td>
+          <td>$<%= item.product.product_price %></td>
+          <td>
+            <%=form_with model: item, method: :patch, local: true do |form|%>
+            <%=form.text_field :quantity, class: "input", style: "width: 30%"%>
+            <%= button_tag type: "submit", class: "button mt-2 ml-3 is-small is-success is-light" do %>
+              <i class="fas fa-check"></i>
+            <% end %>
+          <%end%>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+</div>
+<div class="column ml-5">
+  <h2 class="title is-4 ml-5">Checkout</h2>
+  <%= form_with model: @address, local: true do |form| %>
+  <div class="field">
+    <%= form.label :street %>
+    <div class="control">
+      <%= form.text_field :street, class: "input mt-3" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :city %>
+    <div class="control">
+      <%= form.text_field :city, class: "input mt-3" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :postal_code, "Postal Code" %>
+    <div class="control">
+      <%= form.text_field :postal_code, class: "input mt-3" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :country %>
+    <div class="control">
+      <%= form.text_field :country, class: "input mt-3" %>
+    </div>
+  </div>
+<%end%>
+</div>
+</div>
+<% else %>
+  <p class="ml-5 is-size-4">Your cart is empty.</p>
+<% end %>
