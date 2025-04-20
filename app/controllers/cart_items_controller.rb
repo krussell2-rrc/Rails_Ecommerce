@@ -20,4 +20,8 @@ class CartItemsController < ApplicationController
     item.update(quantity: params[:cart_item][:quantity])
     item.save
   end
+
+  def destroy
+    CartItem.destroy(params[:id])
+  end
 end

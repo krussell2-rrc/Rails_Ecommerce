@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th></th>
+      <th></th>
       <th>Name</th>
       <th>Price</th>
       <th>Quantity</th>
@@ -14,6 +15,13 @@
     <tbody>
       <% current_cart.cart_items.each do |item| %>
         <tr>
+          <td>
+            <%= form_with model: item, method: :delete, local: true do |form| %>
+              <%= button_tag type: "submit", class: "button mt-5 is-danger is-light is-small" do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
+            <% end %>
+          </td>
           <td>
             <img src="<%= item.product.product_img %>" style="width: 75px; height: 75px; object-fit: cover;">
           </td>
