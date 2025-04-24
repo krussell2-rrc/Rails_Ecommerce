@@ -12,6 +12,7 @@ require 'faker'
 
 # AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
+# Seeding product and category model
 access_key = ENV["UNSPLASH_API_KEY"]
 
 [ "laptops", "mobile-accessories", "smartphones", "tablets" ].each do |category_name|
@@ -60,4 +61,18 @@ access_key = ENV["UNSPLASH_API_KEY"]
       )
     end
   end
+end
+
+# Seeding provinces model
+file = File.read(Rails.root.join("db", "data", "canadian_tax_rates.json"))
+provinces = JSON.parse(file)
+
+provinces.each do |prov|
+  Province.create!(
+    province_code: prov["province_code"],
+    province_name: prov["province_name"],
+    gst_rate: prov["gst"].to_f,
+    pst_rate: prov["pst"].to_f,
+    hst_rate: prov["hst"].to_f
+  )
 end
