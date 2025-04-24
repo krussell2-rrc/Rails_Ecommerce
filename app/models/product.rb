@@ -1,5 +1,7 @@
 class Product < ApplicationRecord
   belongs_to :category
+  validates :product_description, :product_img, :product_name, :product_price, presence: true
+  validates :product_name, numericality: true
 
   def self.ransackable_associations(auth_object = nil)
     [ "category" ]
