@@ -5,6 +5,42 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
+
+document.addEventListener("turbo:load", () => {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+      const items = dropdown.querySelectorAll('.dropdown-item');
+
+      items.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log(item)
+
+          fetch('/canadian_tax_rates.json')
+          .then(response => response.json())
+          .then(data => {
+            const GST = data.find(p => p.dataId === Number(item.dataset.id));
+            const PST = data.find(p => p.dataId === Number(item.dataset.id));
+            const HST = data.find(p => p.dataId === Number(item.dataset.id));
+
+
+            let taxRateContainer = document.getElementById("tax-rates")
+            taxRateContainer.innerHTML =
+            `<p class="ml-5 is-size-4 has-text-weight-bold has-text-white">Taxes:</p>
+            <p class="ml-5 is-size-6 has-text-weight-bold has-text-white" id="gst-rate">GST: <span>${GST["gst"]}%</span></p>
+            <p class="ml-5 is-size-6 has-text-weight-bold has-text-white" id="pst-rate">PST: <span>${PST["pst"]}%</span></p>
+            <p class="ml-5 is-size-6 has-text-weight-bold has-text-white" id="hst-rate">HST: <span>${HST["hst"]}%</span></p>`
+
+          }).catch(error => {
+            console.error('Fetch error:', error);
+          });
+
+        });
+      });
+    });
+});
+
 document.addEventListener("turbo:load", () => {
   const navbarBurger = document.querySelector(".navbar-burger");
   const navbarMenu = document.querySelector(".navbar-menu");
@@ -51,4 +87,5 @@ document.addEventListener("turbo:load", () => {
     });
   });
 });
+
 
