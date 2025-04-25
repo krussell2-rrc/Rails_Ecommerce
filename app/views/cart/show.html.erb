@@ -1,8 +1,9 @@
 <h1 class="title is-3 ml-5">Your Shopping Cart</h1>
 <% if current_cart.cart_items.any? %>
 <div class="columns">
+  <div class="cart-container">
   <div class="column">
-<table class="table is-fullwidth is-striped ml-5">
+  <table class="table is-fullwidth is-striped ml-5">
   <thead>
     <tr>
       <th></th>
@@ -38,6 +39,17 @@
       <% end %>
     </tbody>
 </table>
+    <div>
+      <% if current_cart.cart_items.size == 1 %>
+        <p class="ml-5  is-size-4 has-text-weight-bold has-text-white">Subtotal: $<%= current_cart.cart_items.first.subtotal %></p>
+      <% elsif current_cart.cart_items.size > 1 %>
+        <p class="ml-5  is-size-4 has-text-weight-bold has-text-white">
+          Subtotal:
+          <span class="is-size-5 has-text-weight-normal has-text-white">$<%= current_cart.cart_items.sum(&:subtotal) %></span>
+        </p>
+      <% end %>
+    </div>
+  </div>
 </div>
 <div class="column ml-5">
   <h2 class="title is-4 ml-5">Checkout</h2>
@@ -69,6 +81,30 @@
       <%= form.text_field :country, class: "input mt-3" %>
     </div>
   </div>
+
+  <div class="field">
+    <%= form.label :province_id, "Province" %>
+  </div>
+
+<div class="dropdown" id="provinceDropdown">
+  <div class="dropdown-trigger">
+    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu-province">
+      <span>Choose a province</span>
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu-province" role="menu">
+    <div class="dropdown-content">
+      <% Province.all.each do |province| %>
+        <a href="#" class="dropdown-item" data-id="<%= province.id %>"><%= province.province_name %></a>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+</div>
 <%end%>
 </div>
 </div>

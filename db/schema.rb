@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_24_195459) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_24_235054) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -32,6 +32,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_24_195459) do
     t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "province"
     t.index ["province_id"], name: "index_addresses_on_province_id"
   end
 

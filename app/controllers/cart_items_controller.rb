@@ -19,9 +19,11 @@ class CartItemsController < ApplicationController
 
     item.update(quantity: params[:cart_item][:quantity])
     item.save
+    redirect_to cart_path
   end
 
   def destroy
     CartItem.destroy(params[:id])
+    redirect_to cart_path
   end
 end
