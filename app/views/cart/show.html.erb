@@ -41,11 +41,12 @@
 </table>
     <div>
       <% if current_cart.cart_items.size == 1 %>
-        <p class="ml-5  is-size-4 has-text-weight-bold has-text-white">Subtotal: $<%= current_cart.cart_items.first.subtotal %></p>
+        <p class="ml-5  is-size-6 has-text-weight-bold has-text-white">Subtotal:
+        <span class="product-subtotal is-size-6 has-text-weight-normal has-text-white"><%= current_cart.cart_items.first.subtotal %></span></p>
       <% elsif current_cart.cart_items.size > 1 %>
-        <p class="ml-5  is-size-4 has-text-weight-bold has-text-white">
+        <p class="ml-5  is-size-6 has-text-weight-bold has-text-white">
           Subtotal:
-          <span class="is-size-5 has-text-weight-normal has-text-white">$<%= current_cart.cart_items.sum(&:subtotal) %></span>
+        <span class="product-subtotal is-size-6 has-text-weight-normal has-text-white"><%= current_cart.cart_items.sum(&:subtotal) %></span>
         </p>
       <% end %>
     </div>
