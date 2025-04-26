@@ -5,7 +5,27 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
+document.addEventListener("turbo:load", () => {
 
+  document.getElementById("checkout-btn").addEventListener('click', () => {
+
+    // Grabbing the financial order details
+    const gst = parseFloat(document.getElementById("gst-rate").innerText)
+    const pst = parseFloat(document.getElementById("pst-rate").innerText)
+    const hst = parseFloat(document.getElementById("hst-rate").innerText)
+    const subtotal = parseFloat(document.querySelector('.product-subtotal').innerText)
+    const total = parseFloat(document.getElementById("products-total").innerText)
+
+    // Grabbing the address info
+    const street = document.getElementById("street").value
+    const city = document.getElementById("city").value
+    const postalCode = document.getElementById("postal_code").value
+    const country = document.getElementById("country").value
+    const provinceId = document.getElementById("selected-province-id").value
+  });
+});
+
+// Displaying the tax rates and total after a province is selected
 document.addEventListener("turbo:load", () => {
     const dropdowns = document.querySelectorAll('.dropdown');
 
@@ -15,14 +35,27 @@ document.addEventListener("turbo:load", () => {
       items.forEach(item => {
         item.addEventListener('click', (e) => {
           e.preventDefault();
-          console.log(item)
+          document.getElementById("checkout-btn").style.display = "block"
+
+          // Injecting hidden province_id input everytime the province is clicked
+          let selectedProvinceId = item.dataset.id;
+
+          let hiddenInput = document.getElementById('selected-province-id');
+
+          if(!hiddenInput){
+            hiddenInput = document.createElement('input');
+            hiddenInput.type = "hidden"
+            hiddenInput.id = 'selected-province-id'
+            hiddenInput.value = selectedProvinceId
+            document.getElementById("checkoutColumn").appendChild(hiddenInput)
+          }
 
           fetch('/canadian_tax_rates.json')
           .then(response => response.json())
           .then(data => {
             const tax = data.find(p => p.dataId === Number(item.dataset.id));
 
-            const subtotal = Number(document.querySelector('.product-subtotal').innerText)
+            const subtotal = Number(document.querySelector('.product-subtotal').innerText.replace('$', ''))
             const totalTaxRate = tax["gst"] + tax["pst"] + tax["hst"]
             const total = subtotal * (1 + totalTaxRate)
             const roundedTotal = total.toFixed(2)
@@ -33,7 +66,7 @@ document.addEventListener("turbo:load", () => {
             <p class="ml-5 is-size-6 has-text-weight-bold has-text-white" id="gst-rate">GST: <span class="is-size-6 has-text-weight-normal has-text-white">${tax["gst"]}%</span></p>
             <p class="ml-5 is-size-6 has-text-weight-bold has-text-white" id="pst-rate">PST: <span class="is-size-6 has-text-weight-normal has-text-white">${tax["pst"]}%</span></p>
             <p class="ml-5 is-size-6 has-text-weight-bold has-text-white" id="hst-rate">HST: <span class="is-size-6 has-text-weight-normal has-text-white">${tax["hst"]}%</span></p>
-            <p class="ml-5 mt-5 is-size-4 has-text-weight-bold has-text-white" id="hst-rate">Total: <span class="is-size-4 has-text-weight-normal has-text-white">$${roundedTotal}</span></p>`
+            <p class="ml-5 mt-5 is-size-4 has-text-weight-bold has-text-white" id="products-total">Total: <span class="is-size-4 has-text-weight-normal has-text-white">$${roundedTotal}</span></p>`
           }).catch(error => {
             console.error('Fetch error:', error);
           });
@@ -43,6 +76,7 @@ document.addEventListener("turbo:load", () => {
     });
 });
 
+// Bulma navbar burger functionality
 document.addEventListener("turbo:load", () => {
   const navbarBurger = document.querySelector(".navbar-burger");
   const navbarMenu = document.querySelector(".navbar-menu");
@@ -55,6 +89,7 @@ document.addEventListener("turbo:load", () => {
   }
 });
 
+// Bulma dropdown functionality
 document.addEventListener("turbo:load", () => {
   const dropdowns = document.querySelectorAll('.dropdown');
 

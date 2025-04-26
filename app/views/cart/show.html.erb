@@ -42,11 +42,11 @@
     <div>
       <% if current_cart.cart_items.size == 1 %>
         <p class="ml-5  is-size-6 has-text-weight-bold has-text-white">Subtotal:
-        <span class="product-subtotal is-size-6 has-text-weight-normal has-text-white"><%= current_cart.cart_items.first.subtotal %></span></p>
+        <span class="product-subtotal is-size-6 has-text-weight-normal has-text-white">$<%= current_cart.cart_items.first.subtotal %></span></p>
       <% elsif current_cart.cart_items.size > 1 %>
         <p class="ml-5  is-size-6 has-text-weight-bold has-text-white">
           Subtotal:
-        <span class="product-subtotal is-size-6 has-text-weight-normal has-text-white"><%= current_cart.cart_items.sum(&:subtotal) %></span>
+        <span class="product-subtotal is-size-6 has-text-weight-normal has-text-white">$<%= current_cart.cart_items.sum(&:subtotal) %></span>
         </p>
       <% end %>
     </div>
@@ -54,37 +54,40 @@
 
     </div>
   </div>
+  <button style="display: none;"class="button is-success ml-5" id="checkout-btn">Checkout</button>
 </div>
-<div class="column ml-5">
+<div id="checkoutColumn" class="column ml-5">
   <h2 class="title is-4 ml-5">Checkout</h2>
   <%= form_with model: @address, local: true do |form| %>
-  <div class="field">
-    <%= form.label :street %>
-    <div class="control">
-      <%= form.text_field :street, class: "input mt-3" %>
-    </div>
-  </div>
 
-  <div class="field">
-    <%= form.label :city %>
-    <div class="control">
-      <%= form.text_field :city, class: "input mt-3" %>
-    </div>
+<div class="field">
+  <%= form.label :street %>
+  <div class="control">
+    <%= form.text_field :street, class: "input mt-3", id: "street" %>
   </div>
+</div>
 
-  <div class="field">
-    <%= form.label :postal_code, "Postal Code" %>
-    <div class="control">
-      <%= form.text_field :postal_code, class: "input mt-3" %>
-    </div>
+<div class="field">
+  <%= form.label :city %>
+  <div class="control">
+    <%= form.text_field :city, class: "input mt-3", id: "city" %>
   </div>
+</div>
 
-  <div class="field">
-    <%= form.label :country %>
-    <div class="control">
-      <%= form.text_field :country, class: "input mt-3" %>
-    </div>
+<div class="field">
+  <%= form.label :postal_code, "Postal Code" %>
+  <div class="control">
+    <%= form.text_field :postal_code, class: "input mt-3", id: "postal_code" %>
   </div>
+</div>
+
+<div class="field">
+  <%= form.label :country %>
+  <div class="control">
+    <%= form.text_field :country, class: "input mt-3", id: "country", value: "Canada", disabled: true %>
+  </div>
+</div>
+
 
   <div class="field">
     <%= form.label :province_id, "Province" %>
@@ -102,7 +105,7 @@
   <div class="dropdown-menu" id="dropdown-menu-province" role="menu">
     <div class="dropdown-content">
       <% Province.all.each do |province| %>
-        <a href="#" class="dropdown-item" data-id="<%= province.id %>"><%= province.province_name %></a>
+        <a id="province_name" href="#" class="dropdown-item" data-id="<%= province.id %>"><%= province.province_name %></a>
       <% end %>
     </div>
   </div>
