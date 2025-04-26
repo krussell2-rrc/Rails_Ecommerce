@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :products, only: [ :index, :show ]
   resources :addresses, only: [ :create ]
   resources :cart_items, only: [ :update, :destroy ]
+  resources :invoices, only: [ :create, :show ]
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   get "about", to: "pages#about"

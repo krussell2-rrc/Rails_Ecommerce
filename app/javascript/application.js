@@ -22,6 +22,37 @@ document.addEventListener("turbo:load", () => {
     const postalCode = document.getElementById("postal_code").value
     const country = document.getElementById("country").value
     const provinceId = document.getElementById("selected-province-id").value
+
+    // Grabbing the product_id(s)
+    const productInputs = document.querySelectorAll('.product-id')
+    const productIds = Array.from(productInputs).map(input => Number(input.value))
+
+    fetch("/invoices", {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+      },
+      body: JSON.stringify({
+        invoice:{
+          product_ids: productIds,
+          gst: gst,
+          pst: pst,
+          hst: hst,
+          subtotal: subtotal,
+          total: total,
+          street: street,
+          city: city,
+          postal_code: postalCode,
+          country: country,
+          province_id: provinceId
+        }
+      })
+    }).then(response => response.json)
+    .then(data => {
+      Turbo.visit(`/invoices/${data.id}`)
+    })
   });
 });
 

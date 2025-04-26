@@ -1,0 +1,24 @@
+<h1 class="title is-3 has-text-centered mt-5">Thank You for Your Order!</h1>
+
+<div class="box">
+  <h2 class="subtitle is-4">Order Summary</h2>
+  <p><strong>Products:</strong></p>
+  <ul>
+    <% @invoice.products.each do |product| %>
+      <li><%= product.product_name %> - $<%= product.product_price %></li>
+    <% end %>
+  </ul>
+
+  <p><strong>Subtotal:</strong> $<%= @invoice.subtotal %></p>
+  <p><strong>GST:</strong> <%= @invoice.gst %></p>
+  <p><strong>PST:</strong> <%= @invoice.pst %></p>
+  <p><strong>HST:</strong> <%= @invoice.hst %></p>
+  <p><strong>Total:</strong> $<%= @invoice.total %></p>
+
+  <hr>
+
+  <h2 class="subtitle is-4">Shipping Address</h2>
+  <p><%= @invoice.street %></p>
+  <p><%= @invoice.city %>, <%= @invoice.postal_code %></p>
+  <p><%= @invoice.country %></p>
+</div>

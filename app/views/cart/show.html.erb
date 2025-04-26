@@ -28,6 +28,7 @@
           </td>
           <td><%= item.product.product_name %></td>
           <td>$<%= item.product.product_price %></td>
+          <input type="hidden" class="product-id" value="<%= item.product.id %>">
           <td>
             <%=form_with model: item, method: :patch, local: true do |form|%>
             <%=form.text_field :quantity, class: "input", style: "width: 30%"%>
