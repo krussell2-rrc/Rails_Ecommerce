@@ -14,6 +14,6 @@ class InvoicesController < ApplicationController
   private
 
   def invoice_params
-    params.require(:invoice).permit(:product_ids [], :gst, :pst, :hst, :subtotal, :total, :street, :city, :postal_code, :country, :province_id)
+    params.require(:invoice).permit(:product_id, :gst, :pst, :hst, :subtotal, :total, :street, :city, :postal_code, :country, :province_id)
   end
 end
