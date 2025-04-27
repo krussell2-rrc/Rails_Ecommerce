@@ -9,16 +9,23 @@
       <span aria-hidden="true"></span>
     </a>
   </div>
-
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-    <%= link_to "Home", "/index", class: "navbar-item has-text-weight-bold is-family-code" %>
+      <%= link_to "Home", "/index", class: "navbar-item has-text-weight-bold is-family-code" %>
 
-    <%= link_to "Products", "/products", class: "navbar-item has-text-weight-bold is-family-code" %>
+      <%= link_to "Products", "/products", class: "navbar-item has-text-weight-bold is-family-code" %>
 
-    <%= link_to "About", "/about", class: "navbar-item has-text-weight-bold is-family-code" %>
+      <%= link_to "About", "/about", class: "navbar-item has-text-weight-bold is-family-code" %>
+    </div>
+    <div class="navbar-end">
+      <%= link_to "🛒", "/cart ", class: "navbar-item has-text-weight-bold is-family-code" %>
 
-    <%= link_to "🛒", "/cart ", class: "navbar-item has-text-weight-bold is-family-code" %>
+      <%= link_to 'Sign up', new_user_registration_path, class: "navbar-item has-text-weight-bold is-family-code"%>
+
+      <%= link_to 'Login', new_user_session_path, class: "navbar-item has-text-weight-bold is-family-code"%>
+
+      <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "navbar-item has-text-weight-bold is-family-code" %>
+    </div>
   </div>
   </div>
 </nav>
