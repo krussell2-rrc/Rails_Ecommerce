@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_26_233611) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_27_000831) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -88,7 +88,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_26_233611) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.integer "product_id", null: false
     t.decimal "gst"
     t.decimal "pst"
     t.decimal "hst"
@@ -101,7 +100,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_26_233611) do
     t.integer "province_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_invoices_on_product_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -170,7 +168,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_26_233611) do
   add_foreign_key "customers", "users"
   add_foreign_key "invoice_products", "invoices"
   add_foreign_key "invoice_products", "products"
-  add_foreign_key "invoices", "products"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "customers"
