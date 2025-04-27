@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_27_143803) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_27_144101) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -67,15 +67,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_27_143803) do
     t.string "category_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "customers", force: :cascade do |t|
-    t.string "full_name"
-    t.string "phone_number"
-    t.integer "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_customers_on_user_id"
   end
 
   create_table "invoice_products", force: :cascade do |t|
@@ -158,7 +149,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_27_143803) do
   add_foreign_key "addresses", "provinces"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
-  add_foreign_key "customers", "users"
   add_foreign_key "invoice_products", "invoices"
   add_foreign_key "invoice_products", "products"
   add_foreign_key "order_items", "orders"
