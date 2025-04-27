@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :products, only: [ :index, :show ]
   resources :addresses, only: [ :create ]
   resources :cart_items, only: [ :update, :destroy ]
