@@ -53,6 +53,10 @@ document.addEventListener("turbo:load", () => {
     .then(data => {
       Turbo.visit(`/invoices/${data.id}`)
     })
+    .catch(errorData => {
+      console.error("Invoice creation failed:", errorData.errors);
+      alert("Error: " + errorData.errors.join(", "));
+    });
   });
 });
 
