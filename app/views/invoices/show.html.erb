@@ -3,16 +3,23 @@
 <div class="box">
   <h2 class="subtitle is-4">Order Summary</h2>
   <p><strong>Products:</strong></p>
-  <ul>
-    <% @invoice.products.each do |product| %>
-      <li><%= product.product_name %> - $<%= product.product_price %></li>
-    <% end %>
-  </ul>
+
+<ul>
+  <% @invoice.products.each do |product| %>
+    <% invoice_product = @invoice.invoice_products.find { |ip| ip.product_id == product.id } %>
+    <li>
+      <%= product.product_name %> -
+      $<%= product.product_price %>
+      X <%= invoice_product.quantity %>
+    </li>
+  <% end %>
+</ul>
+
 
   <p><strong>Subtotal:</strong> $<%= @invoice.subtotal %></p>
-  <p><strong>GST:</strong> <%= @invoice.gst %></p>
-  <p><strong>PST:</strong> <%= @invoice.pst %></p>
-  <p><strong>HST:</strong> <%= @invoice.hst %></p>
+  <p><strong>GST:</strong> <%= number_with_precision(@invoice.gst, precision: 2) %>%</p>
+  <p><strong>PST:</strong> <%= number_with_precision(@invoice.pst, precision: 2) %>%</p>
+  <p><strong>HST:</strong> <%= number_with_precision(@invoice.hst, precision: 2) %>%</p>
   <p><strong>Total:</strong> $<%= @invoice.total %></p>
 
   <hr>

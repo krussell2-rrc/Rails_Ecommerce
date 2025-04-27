@@ -27,6 +27,10 @@ document.addEventListener("turbo:load", () => {
     const productInputs = document.querySelectorAll('.product-id')
     const productIds = Array.from(productInputs).map(input => Number(input.value))
 
+    // Grabbing the quantities
+    const productQuantity = document.querySelectorAll('.product-quantity')
+    const productQuantities = Array.from(productQuantity).map(input => Number(input.value))
+
     fetch("/invoices", {
       method: "POST",
       headers:{
@@ -46,7 +50,8 @@ document.addEventListener("turbo:load", () => {
           city: city,
           postal_code: postalCode,
           country: country,
-          province_id: provinceId
+          province_id: provinceId,
+          quantities: productQuantities
         }
       })
     }).then(response => response.json())
@@ -98,9 +103,9 @@ document.addEventListener("turbo:load", () => {
             let taxRateContainer = document.getElementById("tax-rates")
             taxRateContainer.innerHTML =
             `<p class="ml-5 is-size-6 has-text-weight-bold has-text-white">Taxes:</p>
-            <p class="ml-5 is-size-6 has-text-weight-bold has-text-white">GST: <span id="gst-rate" class="is-size-6 has-text-weight-normal has-text-white">${tax["gst"]}%</span></p>
-            <p class="ml-5 is-size-6 has-text-weight-bold has-text-white">PST: <span id="pst-rate" class="is-size-6 has-text-weight-normal has-text-white">${tax["pst"]}%</span></p>
-            <p class="ml-5 is-size-6 has-text-weight-bold has-text-white">HST: <span id="hst-rate" class="is-size-6 has-text-weight-normal has-text-white">${tax["hst"]}%</span></p>
+            <p class="ml-5 is-size-6 has-text-weight-bold has-text-white">GST: <span id="gst-rate" class="is-size-6 has-text-weight-normal has-text-white">${(tax["gst"] * 100).toFixed(2)}%</span></p>
+            <p class="ml-5 is-size-6 has-text-weight-bold has-text-white">PST: <span id="pst-rate" class="is-size-6 has-text-weight-normal has-text-white">${(tax["pst"] * 100).toFixed(2)}%</span></p>
+            <p class="ml-5 is-size-6 has-text-weight-bold has-text-white">HST: <span id="hst-rate" class="is-size-6 has-text-weight-normal has-text-white">${(tax["hst"] * 100).toFixed(2)}%</span></p>
             <p class="ml-5 mt-5 is-size-4 has-text-weight-bold has-text-white" >Total: <span id="products-total" class="is-size-4 has-text-weight-normal has-text-white">$${roundedTotal}</span></p>`
           }).catch(error => {
             console.error('Fetch error:', error);

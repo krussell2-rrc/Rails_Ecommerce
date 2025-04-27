@@ -31,7 +31,7 @@
           <input type="hidden" class="product-id" value="<%= item.product.id %>">
           <td>
             <%=form_with model: item, method: :patch, local: true do |form|%>
-            <%=form.text_field :quantity, class: "input", style: "width: 30%"%>
+            <%=form.text_field :quantity, class: "product-quantity input", style: "width: 30%"%>
             <%= button_tag type: "submit", class: "button mt-2 ml-3 is-small is-success is-light" do %>
               <i class="fas fa-check"></i>
             <% end %>
