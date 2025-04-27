@@ -20,11 +20,14 @@
     <div class="navbar-end">
       <%= link_to "🛒", "/cart ", class: "navbar-item has-text-weight-bold is-family-code" %>
 
+      <%if user_signed_in?%>
+      <%= button_to 'Logout', destroy_user_session_path, method: :delete, form: { class: "navbar-item m-0 p-0" },
+      class: "navbar-item has-text-weight-bold is-family-code" %>
+      <%else%>
       <%= link_to 'Sign up', new_user_registration_path, class: "navbar-item has-text-weight-bold is-family-code"%>
 
       <%= link_to 'Login', new_user_session_path, class: "navbar-item has-text-weight-bold is-family-code"%>
-
-      <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "navbar-item has-text-weight-bold is-family-code" %>
+      <%end%>
     </div>
   </div>
   </div>
