@@ -1,0 +1,49 @@
+<h1 class="title is-4">Edit Your Account Details</h1>
+<%= form_with model: @user, local: true do |form| %>
+
+<div class="field">
+  <%= form.label :street %>
+  <div class="control">
+    <%= form.text_field :street, class: "input mt-3", id: "street", value: "#{@user.address.street}" %>
+  </div>
+</div>
+
+<div class="field">
+  <%= form.label :city %>
+  <div class="control">
+    <%= form.text_field :city, class: "input mt-3", id: "city", value: "#{@user.address.city}" %>
+  </div>
+</div>
+
+<div class="field">
+  <%= form.label :postal_code, "Postal Code" %>
+  <div class="control">
+    <%= form.text_field :postal_code, class: "input mt-3", id: "postal_code", value: "#{@user.address.postal_code}" %>
+  </div>
+</div>
+
+<div class="field">
+  <%= form.label :country %>
+  <div class="control">
+    <%= form.text_field :country, class: "input mt-3", id: "country", value: "Canada", disabled: true %>
+  </div>
+</div>
+
+<div class="field">
+  <%= form.label :province_id, "Province" %>
+  <div class="control">
+    <%= form.select(
+          :province_id,
+          Province.all.collect { |p| [ p.province_name, p.id ] },
+          { prompt: "Select a province" },
+          class: "input mb-5",
+          value: "#{@user.address.province_id}"
+        ) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Update", class:"button is-success" %>
+  </div>
+
+  <%end%>
+

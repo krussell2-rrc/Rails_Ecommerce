@@ -4,8 +4,23 @@
 //= require active_admin/base
 import "@hotwired/turbo-rails"
 import "controllers"
-import Rails from "@rails/ujs"
-Rails.start()
+
+// Getting the province_id for the user through the sign-up form
+
+document.addEventListener("turbo:load", () => {
+  document.getElementById("signup-province").addEventListener('click', () => {
+
+    const signupProvince = document.getElementById('signup-province')
+
+    signupProvince.addEventListener('change', (e) => {
+      const selectedId = e.target.value;
+
+      const userProvinceId = document.getElementById('user_province_id')
+      userProvinceId.value = selectedId
+      console.log(selectedId)
+    })
+  })
+})
 
 document.addEventListener("turbo:load", () => {
 
@@ -108,7 +123,7 @@ document.addEventListener("turbo:load", () => {
             <p class="ml-5 is-size-6 has-text-weight-bold has-text-white">GST: <span id="gst-rate" class="is-size-6 has-text-weight-normal has-text-white">${(tax["gst"] * 100).toFixed(2)}%</span></p>
             <p class="ml-5 is-size-6 has-text-weight-bold has-text-white">PST: <span id="pst-rate" class="is-size-6 has-text-weight-normal has-text-white">${(tax["pst"] * 100).toFixed(2)}%</span></p>
             <p class="ml-5 is-size-6 has-text-weight-bold has-text-white">HST: <span id="hst-rate" class="is-size-6 has-text-weight-normal has-text-white">${(tax["hst"] * 100).toFixed(2)}%</span></p>
-            <p class="ml-5 mt-5 is-size-4 has-text-weight-bold has-text-white" >Total: <span id="products-total" class="is-size-4 has-text-weight-normal has-text-white">$${roundedTotal}</span></p>`
+            <p class="ml-5 mt-5 is-size-4 has-text-weight-bold has-text-white" >Total: <span id="products-total" class="is-size-4 has-text-weight-normal has-text-white">${roundedTotal}</span></p>`
           }).catch(error => {
             console.error('Fetch error:', error);
           });
