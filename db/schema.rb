@@ -170,7 +170,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_02_021328) do
   add_foreign_key "invoice_products", "products"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
-  add_foreign_key "orders", "customers"
   add_foreign_key "products", "categories"
   add_foreign_key "users", "provinces"
 end
