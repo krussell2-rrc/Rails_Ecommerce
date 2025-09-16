@@ -8,7 +8,6 @@ class AddForeignKeys < ActiveRecord::Migration[8.0]
     add_fk(:invoice_products, :products)
     add_fk(:order_items,      :orders)
     add_fk(:order_items,      :products)
-    add_fk(:orders,           :customers)
     add_fk(:products,         :categories)
     add_fk(:users,            :provinces)
   end
@@ -23,7 +22,6 @@ class AddForeignKeys < ActiveRecord::Migration[8.0]
     rm_fk(:invoice_products, :products)
     rm_fk(:order_items,      :orders)
     rm_fk(:order_items,      :products)
-    rm_fk(:orders,           :customers)
     rm_fk(:products,         :categories)
     rm_fk(:users,            :provinces)
   end
