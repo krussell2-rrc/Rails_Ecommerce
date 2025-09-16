@@ -1,4 +1,4 @@
-class AddAllForeignKeys < ActiveRecord::Migration[8.0]
+class AddForeignKeys < ActiveRecord::Migration[8.0]
   def change
     add_foreign_key :addresses,       :provinces
     add_foreign_key :addresses,       :users
