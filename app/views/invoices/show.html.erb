@@ -26,6 +26,7 @@
 
   <h2 class="subtitle is-4">Shipping Address</h2>
   <p><%= @invoice.street %></p>
-  <p><%= @invoice.city %>, <%= @invoice.postal_code %></p>
+  <%province = @province.find {|p| p.id == @invoice.province_id}%>
+  <p><%= @invoice.city %> <%=province.province_code%>, <%= @invoice.postal_code %></p>
   <p><%= @invoice.country %></p>
 </div>

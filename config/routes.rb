@@ -1,15 +1,19 @@
 Rails.application.routes.draw do
-  devise_for :users
-  resources :products, only: [ :index, :show ]
-  resources :addresses, only: [ :create ]
-  resources :cart_items, only: [ :update, :destroy ]
-  resources :invoices, only: [ :create, :show ]
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
-  get "about", to: "pages#about"
-  get "contact", to: "pages#contact"
-  get "/cart", to: "cart#show", as: "cart"
-  post "/cart_items", to: "cart_items#create", as: "add_to_cart"
+devise_for :admin_users, ActiveAdmin::Devise.config
+ActiveAdmin.routes(self)
+
+devise_for :users, controllers: { registrations: "users/registrations" }
+
+resources :users, only: [:show, :update]
+resources :products, only: [:index, :show]
+resources :addresses, only: [:create]
+resources :cart_items, only: [:update, :destroy]
+resources :invoices, only: [:create, :show]
+
+get "about", to: "pages#about"
+get "contact", to: "pages#contact"
+get "/cart", to: "cart#show", as: "cart"
+post "/cart_items", to: "cart_items#create", as: "add_to_cart"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

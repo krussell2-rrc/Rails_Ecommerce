@@ -1,0 +1,76 @@
+<h2>Sign up</h2><br />
+<h2 class="mb-5 title is-5">Account Details</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input", style: "width: 20%;" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password", class: "input", style: "width: 20%;" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input", style: "width: 20%;" %>
+  </div>
+
+  <div class="field">
+  <%= f.hidden_field :province_id, id: "user_province_id", class: "input", required: "false" %>
+  </div>
+
+<h2 class="mb-5 title is-5">Address</h2>
+
+<%= f.fields_for :address do |a| %>
+  <div class="field">
+    <%= a.label :province_id, "Province (required)" %>
+    <div class="control">
+      <%= a.select :province_id,
+            Province.all.map { |p| [p.province_name, p.id] },
+            { prompt: "Select a province" },
+            class: "input",
+            style: "width: 20%;",
+            id: "signup-province",
+            required: false %>
+    </div>
+
+  <div class="field">
+    <%= a.label :street, "Street (optional)" %><br />
+    <%= a.text_field :street,
+          class: "input",
+          style: "width: 20%;",
+          required: false %>
+  </div>
+
+  <div class="field">
+    <%= a.label :city, "City (optional)" %><br />
+    <%= a.text_field :city,
+          class: "input",
+          style: "width: 20%;",
+          required: false %>
+  </div>
+
+  <div class="field">
+    <%= a.label :postal_code, "Postal Code (optional)" %><br />
+    <%= a.text_field :postal_code,
+          class: "input",
+          style: "width: 20%;",
+          required: false %>
+  </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Sign up", class:"button is-success" %>
+  </div>
+
+<% end %>
+
+<% end %>
+

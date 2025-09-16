@@ -61,6 +61,16 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Use sqlite3 only in dev/test
+group :development, :test do
+  gem "sqlite3", ">= 2.1"
+end
+
+# Use Postgres in production
+group :production do
+  gem "pg"
+end
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
