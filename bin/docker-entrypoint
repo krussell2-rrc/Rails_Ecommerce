@@ -6,8 +6,12 @@ if [ -z "${LD_PRELOAD+x}" ]; then
   export LD_PRELOAD
 fi
 
-# Always make sure DB is ready (works for fresh Postgres on Render free)
-./bin/rails db:prepare || ./bin/rails db:schema:load
+# Prefer migrations if they exist; otherwise fall back to schema load.
+if ls db/migrate/*.rb >/dev/null 2>&1; then
+  ./bin/rails db:migrate
+else
+  ./bin/rails db:schema:load
+fi
 
-# Hand off to the command (thrust rails server by default)
+# Hand off to whatever CMD was passed (thrust rails server by default)
 exec "$@"
