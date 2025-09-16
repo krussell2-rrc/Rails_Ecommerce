@@ -1,17 +1,13 @@
-# bin/docker-entrypoint
-
 #!/bin/bash -e
 
-# Enable jemalloc for reduced memory usage and latency.
+# Enable jemalloc if available
 if [ -z "${LD_PRELOAD+x}" ]; then
-    LD_PRELOAD=$(find /usr/lib -name libjemalloc.so.2 -print -quit)
-    export LD_PRELOAD
+  LD_PRELOAD=$(find /usr/lib -name libjemalloc.so.2 -print -quit)
+  export LD_PRELOAD
 fi
 
-# --- Always ensure the DB is ready before booting the server ---
-# Try migrations; if migrations aren’t present/applied yet, fall back to schema load.
-# (db:prepare runs create + migrate; schema:load handles a brand-new DB fast.)
+# Always make sure DB is ready (works for fresh Postgres on Render free)
 ./bin/rails db:prepare || ./bin/rails db:schema:load
 
-# Now run whatever command Render passes (thrust rails server by default)
+# Hand off to the command (thrust rails server by default)
 exec "$@"
