@@ -113,11 +113,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_02_021328) do
     t.string "order_status"
     t.decimal "order_tax"
     t.float "grand_total"
-    t.integer "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "quantity"
-    t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
 
   create_table "pages", force: :cascade do |t|
