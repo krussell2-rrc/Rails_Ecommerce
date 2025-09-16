@@ -11,8 +11,6 @@
   </div>
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <%= link_to "Home", "/index", class: "navbar-item has-text-weight-bold is-family-code" %>
-
       <%= link_to "Products", "/products", class: "navbar-item has-text-weight-bold is-family-code" %>
 
       <%= link_to "About", "/about", class: "navbar-item has-text-weight-bold is-family-code" %>
@@ -21,8 +19,11 @@
       <%= link_to "🛒", "/cart ", class: "navbar-item has-text-weight-bold is-family-code" %>
 
       <%if user_signed_in?%>
+      <%= link_to 'Account', user_path(current_user), class: "navbar-item has-text-weight-bold is-family-code"%>
+
       <%= button_to 'Logout', destroy_user_session_path, method: :delete, form: { class: "navbar-item m-0 p-0" },
       class: "navbar-item has-text-weight-bold is-family-code" %>
+
       <%else%>
       <%= link_to 'Sign up', new_user_registration_path, class: "navbar-item has-text-weight-bold is-family-code"%>
 
