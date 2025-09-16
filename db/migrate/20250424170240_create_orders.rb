@@ -5,7 +5,7 @@ class CreateOrders < ActiveRecord::Migration[8.0]
       t.string :order_status
       t.decimal :order_tax
       t.float :grand_total
-      t.references :customer, null: false, foreign_key: true
+      t.references :customer, null: false, index: true, foreign_key: false
 
       t.timestamps
     end

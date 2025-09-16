@@ -1,8 +1,8 @@
 class CreateOrderItems < ActiveRecord::Migration[8.0]
   def change
     create_table :order_items do |t|
-      t.references :order, null: false, foreign_key: true
-      t.references :product, null: false, foreign_key: true
+      t.references :order, null: false, index: true, foreign_key: false
+      t.references :product, null: false, index: true, foreign_key: false
       t.integer :quantity
       t.float :price_at_order_time
       t.float :tax_at_order_time

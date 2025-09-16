@@ -1,7 +1,7 @@
 class CreateInvoices < ActiveRecord::Migration[8.0]
   def change
     create_table :invoices do |t|
-      t.references :product, null: false, foreign_key: true
+      t.references :product, null: false, index: true, foreign_key: false
       t.decimal :gst
       t.decimal :pst
       t.decimal :hst
